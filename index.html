@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Password Generator</title>
+</head>
+
+<body>
+  <header>
+    <h1>Password Generator</h1>
+  </header>
+  <h2>Generate a Password</h2>
+  <textarea readonly id="password" placeholder="Your Secure Password" aria-label="Generated Password"></textarea>
+  <button id="generate">Generate Password</button>
+  <button id="copy">Copy to Clipboard</button>
+  <div id="msg"></div>
+  <script type="text/javascript">
+    var SpecCharArray = ["!", "#", "$", "%", "&", "(", ")", "*", "/", ":", ";", "?", "@", "[", "\\", "]", "^", "_", "{", "}"];
+    // var numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    // char[] letterArray = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+    var letterArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    var msgDiv = document.querySelector("#msg");
+
+    generate.addEventListener("click", function () { //generates password prompts
+
+      var passLength = prompt("How many characters do you want the password to be? The minimum is 8, maximum is 128");
+      while (passLength < 8 || passLength > 128 || passLength === "") {
+        var passLength = prompt("Must enter a value between 8 and 128 for the password");
+      }
+
+      var SpecChar = confirm("Do you need a special character?");
+      // while (SpecChar === "" || SpecChar > parseInt(passLength)) {
+      //   var SpecChar = prompt("Must enter a value less than " + passLength + " for special characters");
+      // }
+
+      // randomsection(arr) {
+      // for (var i = 0, i < arr.length, i++)
+      // var val = arr[0]); //put rand number in [] and use correct array for the arr, upper case convert if need to
+
+
+      // }
+
+      var NumChar = confirm("Do you need a number?");
+      // var CharLeft = (parseInt(passLength) - SpecChar);
+      // while (NumChar === "" || NumChar > CharLeft) {
+      //   var NumChar = prompt("Must enter a value less than " + CharLeft + " for numeric characters");
+      // }
+
+      var ULChar = confirm("Do you need an uppercase letter?");
+      // var CharLeft = CharLeft - NumChar;
+      // while (ULChar === "" || ULChar > CharLeft) {
+      //   var ULChar = prompt("Must enter a value less than " + CharLeft + " for uppercase letters");
+      //   // console.log(ULChar);
+      // }
+
+      // var LLChar = CharLeft - ULChar;
+
+      //  var LLChar = prompt("How many lowercase letters are required?"); //or use confirm??
+      //   var CharLeft = CharLeft-NumChar;
+      //   console.log(CharLeft);
+      //   while (LLChar === "" || LLChar > CharLeft) {
+      //     var LLChar = prompt("Must enter a value less than " + CharLeft + " for lowercase letters");
+
+      //   }
+
+      alert("Generating Password");
+      //displayMessage("success", "Here is your password: " + password);
+
+      //   function displayMessage(type, message) {
+      //   msgDiv.textContent = message; //this will print to the div board
+      //   msgDiv.setAttribute("class", type);
+      // }
+
+      function PassCreate() {
+        var passArray = [];
+        var i = 0;
+        if (SpecChar === true) {
+          var num = Math.round(Math.random() * 20);
+          var t = SpecCharArray[num];
+          passArray.push(t);
+          i++;
+        };
+
+        if (NumChar === true) { //done
+          var num = Math.round(Math.random() * 10); //does this only round up? - no, rounds up or down
+          while (num > 9) {
+            num = Math.round(Math.random() * 10);
+          }
+          i++;
+          passArray.push(num);
+        };
+
+        if (ULChar === true) {
+          var num = Math.round(Math.random() * 25);
+          var v = letterArray[num].toUpperCase();
+          passArray.push(v);
+          i++;
+        };
+
+        passLength = passLength - i;
+
+        h = passLength / 2;
+
+        for (passLength; passLength > h; passLength = passLength - 1) { //ll letters on first half
+          var num = Math.round(Math.random() * 25);
+          var v = letterArray[num];
+          passArray.push(v);
+        };
+
+
+        for (passLength; passLength > 0; passLength = passLength - 1) { //ll letters on second half
+          var num = Math.round(Math.random() * 25);
+          var v = letterArray[num];
+          passArray.unshift(v);
+        };
+
+        return passArray.join("");
+      }
+      password.textContent = PassCreate();
+    });
+
+    copy.addEventListener("click", function () {
+
+      // var copyText = copy.getElementById("myInput");
+      var copyText = document.getElementById("password");
+      /* Select the text field */
+      copyText.select();
+      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+      /* Copy the text inside the text field */
+      document.execCommand("copy");
+      /* Alert the copied text */
+      alert("Copied the text: " + copyText.value);
+    });
+
+  </script>
+</body>
+
+</html>
